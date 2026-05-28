@@ -251,41 +251,54 @@ function goView(name){
 }
 
 function resetNavScroll(){
-  const nav = document.getElementById('site-nav');
-  if(nav) nav.classList.remove('nav-hidden');
+  setNavVisible(true);
+  navScrollState.accumulated = 0;
   const activeView = currentView === 'topic'
     ? document.getElementById('view-topic')
     : document.getElementById('view-home');
   navScrollState.lastY = activeView?.scrollTop || 0;
 }
 
-const navScrollState = { lastY: 0, ticking: false };
+const navScrollState = { lastY: 0, ticking: false, accumulated: 0 };
+
+function setNavVisible(show){
+  const nav = document.getElementById('site-nav');
+  if(!nav) return;
+  nav.classList.toggle('nav-hidden', !show);
+}
 
 function updateNavOnScroll(){
   navScrollState.ticking = false;
-  const nav = document.getElementById('site-nav');
   const activeView = currentView === 'topic'
     ? document.getElementById('view-topic')
     : currentView === 'home'
       ? document.getElementById('view-home')
       : null;
-  if(!nav || !activeView || !activeView.classList.contains('active')) return;
+  if(!activeView || !activeView.classList.contains('active')) return;
 
   const y = activeView.scrollTop;
   const delta = y - navScrollState.lastY;
+  navScrollState.lastY = y;
 
-  const SHOW_AT_TOP = 10;
-  const SCROLL_THRESHOLD = 4;
-
-  if(y <= SHOW_AT_TOP){
-    nav.classList.remove('nav-hidden');
-  } else if(delta < -SCROLL_THRESHOLD){
-    nav.classList.add('nav-hidden');
-  } else if(delta > SCROLL_THRESHOLD){
-    nav.classList.remove('nav-hidden');
+  // Always show nav when near top of page
+  if(y <= 24){
+    navScrollState.accumulated = 0;
+    setNavVisible(true);
+    return;
   }
 
-  navScrollState.lastY = y;
+  // Ignore tiny jitter; only react after meaningful scroll distance
+  navScrollState.accumulated += delta;
+  const HIDE_AFTER = 20;  // scroll down into content → hide
+  const SHOW_AFTER = 14;  // scroll back up → show (slightly lower = less flicker)
+
+  if(navScrollState.accumulated >= HIDE_AFTER){
+    setNavVisible(false);
+    navScrollState.accumulated = 0;
+  } else if(navScrollState.accumulated <= -SHOW_AFTER){
+    setNavVisible(true);
+    navScrollState.accumulated = 0;
+  }
 }
 
 function initNavScroll(){

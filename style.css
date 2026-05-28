@@ -28,12 +28,11 @@
     background:rgba(3,5,8,0.96);
     border-bottom:1px solid rgba(77,184,255,0.08);
     transform:translateY(0);
-    transition:transform .35s cubic-bezier(.22,1,.36,1), opacity .35s ease;
+    transition:transform .22s cubic-bezier(.22,1,.36,1);
     will-change:transform;
   }
   nav#site-nav.nav-hidden{
     transform:translateY(calc(-1 * var(--nav-h) - 2px));
-    opacity:0;
     pointer-events:none;
   }
   .nav-logo{
