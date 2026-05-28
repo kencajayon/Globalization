@@ -1149,9 +1149,72 @@
     .topic-top-grid{grid-template-columns:1fr}
     .topic-collage{grid-template-rows:90px 90px}
   }
+  @media(max-width:768px){
+    #view-home{
+      overflow-y:auto;
+      overflow-x:hidden;
+      -webkit-overflow-scrolling:touch;
+    }
+    .home-grid{
+      flex:none;
+      grid-template-rows:auto auto;
+      gap:.65rem;
+      padding:.75rem .8rem 0;
+    }
+    .hero-copy{
+      padding:.4rem 0 0;
+    }
+    .hero-title{
+      font-size:clamp(1.35rem,8vw,1.9rem);
+      line-height:1.12;
+      margin-bottom:.8rem;
+    }
+    .hero-main{
+      white-space:normal;
+    }
+    .btn-explore{
+      align-self:center;
+      width:min(260px,100%);
+      padding:.66rem 1rem;
+    }
+    .globe-wrap{
+      min-height:180px;
+      max-height:220px;
+      padding:.35rem .25rem 0;
+      overflow:hidden;
+    }
+    #globe3d{
+      position:relative;
+      top:auto;
+      bottom:auto;
+      left:auto;
+      right:auto;
+      height:200px;
+      width:100%;
+      display:block;
+    }
+    .topics-strip{
+      padding:0 .8rem 1rem;
+    }
+    .topic-cards{
+      gap:8px;
+    }
+    .tcard-thumb{
+      height:76px;
+    }
+    .tcard-body{
+      padding:.75rem;
+    }
+    .tcard p{
+      font-size:.78rem;
+      line-height:1.35;
+    }
+  }
   @media(max-width:600px){
     .topic-cards{grid-template-columns:repeat(2,1fr)}
-    .nav-links{gap:1rem}
+    .nav-links{gap:.55rem}
+    .nav-logo{font-size:.92rem;letter-spacing:.1em}
+    .nav-cta{padding:.45rem .7rem;font-size:.62rem;letter-spacing:.08em}
     .nav-link{display:none}
     .nav-link.show-mobile{display:inline}
   }
