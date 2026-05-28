@@ -247,6 +247,13 @@ function goView(name){
   document.querySelectorAll('.nav-link').forEach(a => a.classList.toggle('active', a.dataset.view === name));
   if(name === 'home') document.getElementById('nav-home').classList.add('active');
   document.getElementById('site-nav')?.classList.remove('nav-hidden');
+  const creditsBtn = document.getElementById('nav-credits-btn');
+  const creditsPanel = document.getElementById('nav-credits-panel');
+  if(creditsPanel && creditsBtn && !creditsPanel.hidden){
+    creditsPanel.hidden = true;
+    creditsBtn.classList.remove('is-open');
+    creditsBtn.setAttribute('aria-expanded', 'false');
+  }
   resetNavScroll();
 }
 
@@ -534,7 +541,43 @@ document.getElementById('slide-back').onclick = () => goView('home');
 document.getElementById('slide-prev').onclick = () => openTopicSlide(TOPICS[(currentTopicIdx - 1 + TOPICS.length) % TOPICS.length].id);
 document.getElementById('slide-next').onclick = () => openTopicSlide(TOPICS[(currentTopicIdx + 1) % TOPICS.length].id);
 document.getElementById('btn-first-topic').onclick = () => openTopicSlide(TOPICS[0].id);
-document.getElementById('nav-explore').onclick = () => openTopicSlide(TOPICS[0].id);
+
+function initNavCredits(){
+  const btn = document.getElementById('nav-credits-btn');
+  const panel = document.getElementById('nav-credits-panel');
+  if(!btn || !panel) return;
+
+  const closePanel = () => {
+    panel.hidden = true;
+    btn.classList.remove('is-open');
+    btn.setAttribute('aria-expanded', 'false');
+  };
+
+  const openPanel = () => {
+    panel.hidden = false;
+    btn.classList.add('is-open');
+    btn.setAttribute('aria-expanded', 'true');
+  };
+
+  const togglePanel = () => {
+    if(panel.hidden) openPanel();
+    else closePanel();
+  };
+
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    togglePanel();
+  });
+
+  panel.addEventListener('click', e => e.stopPropagation());
+
+  document.addEventListener('click', () => closePanel());
+  document.addEventListener('keydown', e => {
+    if(e.key === 'Escape') closePanel();
+  });
+}
+
+initNavCredits();
 
 document.querySelectorAll('[data-view]').forEach(a => {
   a.addEventListener('click', e => {
