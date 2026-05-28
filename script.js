@@ -1062,12 +1062,7 @@ function initSplashLoader(){
   const status = document.getElementById('splash-status');
   if(!splash || !fill) return;
 
-  const isMobile = window.matchMedia('(max-width: 768px)').matches;
-  const minMs = isMobile ? 650 : 1000;
-  const tickMs = isMobile ? 70 : 100;
-  const hideDelay = isMobile ? 120 : 220;
-  const removeDelay = isMobile ? 220 : 350;
-  const maxWait = isMobile ? 1400 : 2200;
+  const minMs = 2000;
   const start = performance.now();
   let progress = 0;
   let done = false;
@@ -1080,10 +1075,10 @@ function initSplashLoader(){
 
   const tick = setInterval(() => {
     if(done) return;
-    if(progress < 92) setProgress(progress + (isMobile ? 10 : 7) + Math.random() * 4);
-    if(progress >= 30 && progress < 60) status.textContent = 'LOADING...';
-    else if(progress >= 60 && progress < 92) status.textContent = 'ALMOST READY...';
-  }, tickMs);
+    if(progress < 88) setProgress(progress + Math.random() * 6 + 3);
+    if(progress >= 25 && progress < 55) status.textContent = 'LOADING MODULES...';
+    else if(progress >= 55 && progress < 88) status.textContent = 'CONNECTING...';
+  }, 140);
 
   const finish = () => {
     if(done) return;
@@ -1094,9 +1089,9 @@ function initSplashLoader(){
     setTimeout(() => {
       splash.classList.add('splash-done');
       splash.setAttribute('aria-busy', 'false');
-      setTimeout(() => splash.remove(), removeDelay);
-      requestAnimationFrame(() => preloadAllTopicImages());
-    }, hideDelay);
+      preloadAllTopicImages();
+      setTimeout(() => splash.remove(), 600);
+    }, 400);
   };
 
   const tryFinish = () => {
@@ -1104,13 +1099,8 @@ function initSplashLoader(){
     setTimeout(finish, Math.max(0, minMs - elapsed));
   };
 
-  setTimeout(finish, maxWait);
-
-  if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', tryFinish, { once: true });
-  } else {
-    tryFinish();
-  }
+  if(document.readyState === 'complete') tryFinish();
+  else window.addEventListener('load', tryFinish, { once: true });
 }
 
 initSplashLoader();
