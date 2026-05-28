@@ -253,8 +253,10 @@ function goView(name){
 function resetNavScroll(){
   const nav = document.getElementById('site-nav');
   if(nav) nav.classList.remove('nav-hidden');
-  const topicView = document.getElementById('view-topic');
-  navScrollState.lastY = topicView?.scrollTop || 0;
+  const activeView = currentView === 'topic'
+    ? document.getElementById('view-topic')
+    : document.getElementById('view-home');
+  navScrollState.lastY = activeView?.scrollTop || 0;
 }
 
 const navScrollState = { lastY: 0, ticking: false };
@@ -262,22 +264,21 @@ const navScrollState = { lastY: 0, ticking: false };
 function updateNavOnScroll(){
   navScrollState.ticking = false;
   const nav = document.getElementById('site-nav');
-  const topicView = document.getElementById('view-topic');
-  if(!nav || !topicView || currentView !== 'topic' || !topicView.classList.contains('active')) return;
-  if(window.matchMedia('(max-width: 1024px)').matches){
-    nav.classList.remove('nav-hidden');
-    navScrollState.lastY = topicView.scrollTop;
-    return;
-  }
+  const activeView = currentView === 'topic'
+    ? document.getElementById('view-topic')
+    : currentView === 'home'
+      ? document.getElementById('view-home')
+      : null;
+  if(!nav || !activeView || !activeView.classList.contains('active')) return;
 
-  const y = topicView.scrollTop;
+  const y = activeView.scrollTop;
   const delta = y - navScrollState.lastY;
 
   if(y <= 12){
     nav.classList.remove('nav-hidden');
-  } else if(delta > 6){
-    nav.classList.add('nav-hidden');
   } else if(delta < -6){
+    nav.classList.add('nav-hidden');
+  } else if(delta > 6){
     nav.classList.remove('nav-hidden');
   }
 
@@ -286,14 +287,18 @@ function updateNavOnScroll(){
 
 function initNavScroll(){
   const nav = document.getElementById('site-nav');
+  const homeView = document.getElementById('view-home');
   const topicView = document.getElementById('view-topic');
-  if(!nav || !topicView) return;
+  if(!nav || !topicView || !homeView) return;
 
-  topicView.addEventListener('scroll', () => {
-    if(currentView !== 'topic' || navScrollState.ticking) return;
+  const onScroll = () => {
+    if((currentView !== 'topic' && currentView !== 'home') || navScrollState.ticking) return;
     navScrollState.ticking = true;
     requestAnimationFrame(updateNavOnScroll);
-  }, { passive: true });
+  };
+
+  topicView.addEventListener('scroll', onScroll, { passive: true });
+  homeView.addEventListener('scroll', onScroll, { passive: true });
 
   resetNavScroll();
 }
