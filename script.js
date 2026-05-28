@@ -274,11 +274,14 @@ function updateNavOnScroll(){
   const y = activeView.scrollTop;
   const delta = y - navScrollState.lastY;
 
-  if(y <= 12){
+  const SHOW_AT_TOP = 10;
+  const SCROLL_THRESHOLD = 4;
+
+  if(y <= SHOW_AT_TOP){
     nav.classList.remove('nav-hidden');
-  } else if(delta < -6){
+  } else if(delta < -SCROLL_THRESHOLD){
     nav.classList.add('nav-hidden');
-  } else if(delta > 6){
+  } else if(delta > SCROLL_THRESHOLD){
     nav.classList.remove('nav-hidden');
   }
 
