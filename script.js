@@ -264,6 +264,11 @@ function updateNavOnScroll(){
   const nav = document.getElementById('site-nav');
   const topicView = document.getElementById('view-topic');
   if(!nav || !topicView || currentView !== 'topic' || !topicView.classList.contains('active')) return;
+  if(window.matchMedia('(max-width: 1024px)').matches){
+    nav.classList.remove('nav-hidden');
+    navScrollState.lastY = topicView.scrollTop;
+    return;
+  }
 
   const y = topicView.scrollTop;
   const delta = y - navScrollState.lastY;
