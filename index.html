@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Globalization — Technology & The Internet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://loremflickr.com" crossorigin>
+<link rel="preconnect" href="https://picsum.photos" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="splash-loader" aria-live="polite" aria-busy="true" aria-label="Loading">
+  <div class="splash-inner">
+    <div class="splash-logo">DIGITAL<span>GLOBE</span></div>
+    <div class="splash-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="splash-bar">
+      <div class="splash-bar-fill" id="splash-bar-fill"></div>
+    </div>
+    <p class="splash-status" id="splash-status">INITIALIZING...</p>
+  </div>
+</div>
+
+<nav id="site-nav">
+  <div class="nav-logo">Digital<span>Globe</span></div>
+  <div class="nav-links">
+    <a class="nav-link active" href="#" data-view="home" id="nav-home">Overview</a>
+    <a class="nav-link" href="#" data-view="quiz" id="nav-quiz">Assessment</a>
+    <button class="nav-cta" type="button" id="nav-explore">Explore Topics</button>
+  </div>
+</nav>
+
+<div id="stage">
+  <!-- HOME -->
+  <section id="view-home" class="view active">
+    <div class="home-grid">
+      <div class="hero-copy">
+        <h1 class="hero-title">
+          <span class="hero-kicker">Technology &amp; the Internet</span>
+          <span class="hero-main">Connect the World</span>
+          <span class="hero-subtitle">Digital Globalization</span>
+        </h1>
+        <button class="btn-explore" type="button" id="btn-first-topic">Get Started</button>
+      </div>
+      <div class="globe-wrap">
+        <div class="globe-fallback" id="globe-fallback">Loading globe…</div>
+        <canvas id="globe3d"></canvas>
+      </div>
+    </div>
+    <div class="wave-bar"></div>
+    <div class="topics-strip">
+      <div class="topic-cards" id="topic-cards"></div>
+    </div>
+  </section>
+
+  <!-- TOPIC SLIDE -->
+  <section id="view-topic" class="view">
+    <div class="slide-header">
+      <button class="slide-back" type="button" id="slide-back">← Overview</button>
+      <div class="slide-progress">Topic <b id="slide-num">01</b> / 06</div>
+    </div>
+    <div class="slide-body">
+      <div class="slide-content">
+        <div class="topic-pages" id="topic-pages">
+          <div class="topic-scroll" id="topic-scroll"></div>
+        </div>
+      </div>
+      <div class="slide-visual">
+        <div class="frame-box frame-corners">
+          <span></span>
+          <div class="slide-img-badge" id="slide-img-badge">Infrastructure</div>
+          <img class="slide-topic-img" id="slide-image" src="" alt="" />
+          <div class="slide-img-overlay"></div>
+          <div class="visual-stat" id="slide-stat">
+            <strong>5.4B</strong>
+            users online worldwide
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div class="slide-dots" id="slide-dots"></div>
+      <div class="slide-nav-btns">
+        <button class="btn-slide" type="button" id="slide-prev">Previous</button>
+        <button class="btn-slide primary" type="button" id="slide-next">Next Topic</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="view-quiz" class="view">
+    <div class="quiz-shell">
+      <div class="quiz-panel">
+        <div class="q-start" id="q-start">
+          <span class="quiz-badge">Knowledge Assessment</span>
+          <h2>Test Your Knowledge</h2>
+          <p class="quiz-intro">Eight questions covering digital globalization — from internet access and e-commerce to AI, remote work, and the digital divide.</p>
+          <div class="quiz-meta-row">
+            <div class="quiz-meta-item"><strong>8</strong><span>Questions</span></div>
+            <div class="quiz-meta-item"><strong>~5</strong><span>Minutes</span></div>
+            <div class="quiz-meta-item"><strong>6</strong><span>Topics</span></div>
+          </div>
+          <button class="btn-explore" type="button" onclick="startQuiz()" style="width:100%">Begin Assessment</button>
+        </div>
+        <div id="q-game" style="display:none">
+          <div class="quiz-game-head">
+            <div>
+              <span class="quiz-step-label">Progress</span>
+              <span id="q-prog">Question 1 of 8</span>
+            </div>
+            <div class="quiz-score-pill" id="q-score">Score: 0</div>
+          </div>
+          <div class="q-progress-track"><div class="q-bar-fill" id="q-bar" style="width:0%"></div></div>
+          <div class="q-step-dots" id="q-step-dots" aria-hidden="true"></div>
+          <div class="quiz-game-layout" id="quiz-game-layout">
+            <div class="quiz-main-col">
+              <article class="q-card">
+                <span class="q-num" id="q-num">01</span>
+                <h3 class="q-text" id="q-text"></h3>
+                <div class="q-opts" id="q-opts"></div>
+              </article>
+            </div>
+            <aside class="q-feedback-side" id="q-feedback-side" aria-live="polite">
+              <div class="q-feedback" id="q-feedback" hidden></div>
+            </aside>
+          </div>
+          <button class="q-next" type="button" id="q-next" onclick="nextQ()">Continue</button>
+        </div>
+        <div class="q-end" id="q-end" style="display:none">
+          <span class="quiz-badge">Results</span>
+          <div class="quiz-result-visual">
+            <svg class="quiz-result-ring" viewBox="0 0 120 120" aria-hidden="true">
+              <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+              <circle class="ring-fill" id="quiz-ring-fill" cx="60" cy="60" r="52"></circle>
+            </svg>
+            <div class="quiz-result-score">
+              <strong><span id="ring-num">0</span>/<span id="ring-total">8</span></strong>
+              <span id="ring-pct">0%</span>
+            </div>
+          </div>
+          <h2 id="end-title"></h2>
+          <p id="end-msg"></p>
+          <div class="quiz-actions">
+            <button class="btn-explore" type="button" onclick="startQuiz()">Retake</button>
+            <button class="btn-slide" type="button" onclick="goView('home')">Back to Overview</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
