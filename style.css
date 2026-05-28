@@ -1239,14 +1239,32 @@
     }
   }
   @media(max-width:600px){
+    #stage{
+      padding-top:calc(var(--nav-h) + 40px);
+    }
+    #view-home{
+      padding-top:1rem;
+    }
+    .home-grid{
+      padding:1.45rem .75rem 0;
+    }
     .topic-cards{grid-template-columns:repeat(2,1fr)}
-    .nav-links{gap:.45rem}
-    .nav-logo{font-size:.82rem;letter-spacing:.07em}
-    .nav-cta{display:none}
+    nav#site-nav{
+      padding:0 .7rem;
+    }
+    .nav-links{gap:.35rem}
+    .nav-logo{font-size:.74rem;letter-spacing:.05em}
+    .nav-cta{
+      display:inline-block;
+      padding:.34rem .5rem;
+      font-size:.54rem;
+      letter-spacing:.05em;
+      box-shadow:0 0 14px var(--glow);
+    }
     .nav-link{
       display:inline;
-      font-size:.62rem;
-      letter-spacing:.06em;
+      font-size:.56rem;
+      letter-spacing:.04em;
       white-space:nowrap;
     }
   }
