@@ -1,6 +1,6 @@
 const TOPICS = [
   { id:'internet', label:'Global Internet Access', tag:'Infrastructure', stat:'5.4B', statLabel:'users online worldwide', color:'#4db8ff',
-    image:'images/global-internet-access.png',
+    image:'images/global-internet-access.jpg',
     imageAlt:'Hand holding a glowing digital globe representing global internet connectivity',
     collageAlts:['Digital globe representing global connectivity','Data center servers powering the internet','Network cables and infrastructure','Person using laptop connected online'],
     desc:'Over 5.4 billion people are now online, connecting individuals across every continent through shared digital infrastructure.',
@@ -26,7 +26,7 @@ const TOPICS = [
       ], bullets:['Affordability matters as much as coverage.','Digital skills help people turn access into real outcomes.'] }
     ] },
   { id:'social', label:'Social Media & Culture', tag:'Culture', stat:'150+', statLabel:'countries reached by major platforms', color:'#6ba3d4',
-    image:'images/social-media-culture.png',
+    image:'images/social-media-culture.jpg',
     imageAlt:'Young woman using smartphone surrounded by social media platform icons',
     collageAlts:['Social media apps on a smartphone screen','Creator filming content for online platforms','Friends sharing moments together','Team collaborating on digital content'],
     desc:'Platforms like TikTok, YouTube, and Instagram spread ideas and trends worldwide, reshaping how cultures interact across borders.',
@@ -52,7 +52,7 @@ const TOPICS = [
       ], bullets:['Verify sources before sharing sensitive information.','Understand how algorithms shape what you see.'] }
     ] },
   { id:'ecommerce', label:'E-Commerce', tag:'Economy', stat:'$6.3T', statLabel:'global e-commerce revenue (2024)', color:'#5ac4b8',
-    image:'images/e-commerce.png',
+    image:'images/e-commerce.jpg',
     imageAlt:'Laptop showing online store dashboard with shopping cart, credit card, and shipping boxes',
     collageAlts:['Customer paying online at checkout','Warehouse packages ready for shipping','Online shopping on a laptop','Delivery boxes arriving at a doorstep'],
     desc:'Digital marketplaces allow anyone to buy and sell goods across international borders without a traditional storefront.',
@@ -78,7 +78,7 @@ const TOPICS = [
       ], bullets:['Fake listings and scams require verification and enforcement.','Reliable logistics builds repeat customers.'] }
     ] },
   { id:'remote', label:'Remote Work', tag:'Work', stat:'300M+', statLabel:'remote workers enabled by technology', color:'#7b9fd4',
-    image:'images/remote-work.png',
+    image:'images/remote-work.jpg',
     imageAlt:'Woman working remotely from home office on a video conference call',
     collageAlts:['Video conference call with remote teammates','Home office desk setup for remote work','Collaborative team working together','Laptop used for flexible remote work'],
     desc:'Workers can now collaborate across continents from home, redefining employment and productivity on a global scale.',
@@ -104,7 +104,7 @@ const TOPICS = [
       ], bullets:['Reliable internet and proper equipment are essential.','Outcome-based management works better than “online presence” alone.'] }
     ] },
   { id:'divide', label:'The Digital Divide', tag:'Equity', stat:'2.6B', statLabel:'people still without internet access', color:'#a8947a',
-    image:'images/equality.png',
+    image:'images/equality.jpg',
     imageAlt:'People in a city crosswalk connected through social media and digital platforms',
     collageAlts:['Rural landscape where connectivity is limited','Students learning with shared classroom resources','Books and study materials for digital literacy','Diverse community members in an urban setting'],
     desc:'Not everyone benefits equally from digital globalization — billions remain offline, deepening global inequality.',
@@ -130,7 +130,7 @@ const TOPICS = [
       ], bullets:['Support teachers, workers, and families with digital skills training.','Design services for people with disabilities and limited literacy.'] }
     ] },
   { id:'ai', label:'AI & Automation', tag:'Innovation', stat:'100M', statLabel:'ChatGPT users in 2 months', color:'#8a9bb8',
-    image:'images/ai-automation.png',
+    image:'images/ai-automation.jpg',
     imageAlt:'Wireframe robotic hand and human hand reaching to connect — AI and human collaboration',
     collageSlotOverrides:{
       1:'images/ai-collage-2.png'
@@ -168,7 +168,7 @@ function topicCollageImages(t){
   return [0, 1, 2, 3].map(i => ({
     src: overrides[i] !== undefined
       ? overrides[i]
-      : `images/${t.id}-collage-${i + 1}.png`,
+      : `images/${t.id}-collage-${i + 1}.jpg`,
     fallback: t.image,
     alt: alts[i]
   }));
