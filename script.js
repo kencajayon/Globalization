@@ -133,7 +133,7 @@ const TOPICS = [
     image:'images/ai-automation.png',
     imageAlt:'Wireframe robotic hand and human hand reaching to connect — AI and human collaboration',
     collageSlotOverrides:{
-      1:'https://loremflickr.com/760/520/programming,software/all?lock=ai-unique-2'
+      1:'images/ai-collage-robot.png'
     },
     collageAlts:['AI visualization and neural network concept','Robotic arm used in automation','Computer chip powering machine learning','Technology shaping future automation'],
     desc:'Artificial intelligence is reshaping global labor markets and accelerating cross-border innovation at unprecedented speed.',
@@ -161,34 +161,20 @@ const TOPICS = [
 ];
 
 function topicCollageImages(t){
-  const tagsByTopic = {
-    internet:['internet,technology','server,network','cable,infrastructure','laptop,computer'],
-    social:['smartphone,social','camera,video','friends,people','teamwork,office'],
-    ecommerce:['shopping,store','warehouse,package','laptop,shopping','delivery,box'],
-    remote:['videocall,meeting','homeoffice,desk','teamwork,collaboration','laptop,work'],
-    divide:['rural,landscape','education,classroom','books,study','community,people'],
-    ai:['artificialintelligence,technology','robot,automation','computer,chip','technology,future']
-  };
-  const tags = tagsByTopic[t.id] || ['technology,digital','network,computer','data,server','global,world'];
   const alts = (t.collageAlts && t.collageAlts.length >= 4)
     ? t.collageAlts.slice(0, 4)
-    : tags.map((_, i) => `${t.imageAlt || t.label} — view ${i + 1}`);
+    : [0, 1, 2, 3].map(i => `${t.imageAlt || t.label} — view ${i + 1}`);
   const overrides = t.collageSlotOverrides || {};
-  return tags.map((tag, i) => ({
+  return [0, 1, 2, 3].map(i => ({
     src: overrides[i] !== undefined
       ? overrides[i]
-      : `https://loremflickr.com/760/520/${tag}/all?lock=${t.id}-${i}`,
-    fallback: `https://picsum.photos/seed/dg-${t.id}-collage-${i + 1}/760/520`,
+      : `images/${t.id}-collage-${i + 1}.png`,
     alt: alts[i]
   }));
 }
 
-function topicImgUrl(url, width){
-  if(!url) return url;
-  if(/^https?:\/\/(picsum\.photos|loremflickr\.com)/i.test(url)) return url;
-  const id = url.match(/photo-([a-z0-9-]+)/i);
-  if(!id) return url;
-  return `https://images.unsplash.com/photo-${id[1]}?w=${width||960}&q=80&auto=format&fit=crop`;
+function topicImgUrl(url){
+  return url || '';
 }
 
 const imagePreloadCache = new Map();
@@ -210,14 +196,7 @@ function preloadImage(url){
 
 function getTopicImageUrls(t){
   const collage = topicCollageImages(t);
-  const urls = [
-    topicImgUrl(t.image, 1200),
-    topicImgUrl(t.image, 960),
-    topicImgUrl(t.image, 400),
-    ...collage.map(c => c.src),
-    ...collage.map(c => c.fallback)
-  ];
-  return [...new Set(urls.filter(Boolean))];
+  return [...new Set([t.image, ...collage.map(c => c.src)].filter(Boolean))];
 }
 
 function preloadTopicImages(t){
@@ -379,7 +358,7 @@ function renderTopicLongform(t){
           ${(p0.paragraphs || [p0.text || t.desc]).slice(0,3).map(txt => `<p class="page-para">${txt}</p>`).join('')}
         </div>
         <div class="topic-panel-media" style="--topic-accent:${t.color}">
-          <img src="${topicImgUrl(t.image, 1200)}" data-fallback="https://picsum.photos/seed/dg-${t.id}-hero/1200/800" alt="${t.imageAlt || t.label}" loading="eager" decoding="async" fetchpriority="high" referrerpolicy="no-referrer" />
+          <img src="${topicImgUrl(t.image)}" alt="${t.imageAlt || t.label}" loading="eager" decoding="async" fetchpriority="high" />
           <div class="topic-hero-stat">
             <div class="topic-hero-stat-inner">
               <span class="topic-hero-stat-num">${t.stat}</span>
@@ -391,7 +370,7 @@ function renderTopicLongform(t){
       <div class="topic-row topic-row-b">
         <div class="topic-collage">
           ${collage.map((item, i) => `
-            <div><img src="${item.src}" data-fallback="${item.fallback}" data-collage-idx="${i}" alt="${item.alt}" loading="eager" decoding="async" referrerpolicy="no-referrer" /></div>
+            <div><img src="${item.src}" data-collage-idx="${i}" alt="${item.alt}" loading="eager" decoding="async" /></div>
           `).join('')}
         </div>
         <div class="topic-row-copy">
@@ -417,7 +396,6 @@ function renderTopicLongform(t){
 
   scrollEl.classList.add('is-swapping');
   scrollEl.innerHTML = `<div class="topic-layout">${singleCard}</div>`;
-  wireTopicImageFallback();
   wireTopicImageReveal();
   wireTopicImage3D();
   requestAnimationFrame(() => scrollEl.classList.remove('is-swapping'));
@@ -431,20 +409,6 @@ function wireTopicImageReveal(){
       img.addEventListener('load', reveal, { once: true });
       img.addEventListener('error', reveal, { once: true });
     }
-  });
-}
-
-function wireTopicImageFallback(){
-  document.querySelectorAll('[data-fallback]').forEach(img => {
-    img.onerror = () => {
-      const fb = img.dataset.fallback;
-      if(fb && img.src !== fb){
-        img.src = fb;
-        img.onload = () => img.classList.add('is-ready');
-      } else {
-        img.classList.add('is-ready');
-      }
-    };
   });
 }
 
@@ -483,20 +447,11 @@ function renderTopicSlide(idx){
   resetNavScroll();
 
   const img = document.getElementById('slide-image');
-  const src = topicImgUrl(t.image, 960);
-  delete img.dataset.fallback;
+  const src = topicImgUrl(t.image);
   img.classList.remove('loaded');
   img.alt = t.imageAlt || t.label;
-  img.referrerPolicy = 'no-referrer';
   img.onload = () => img.classList.add('loaded');
-  img.onerror = () => {
-    if(!img.dataset.fallback){
-      img.dataset.fallback = '1';
-      img.src = `https://picsum.photos/seed/dg-${t.id}/960/720`;
-      return;
-    }
-    img.classList.add('loaded');
-  };
+  img.onerror = () => img.classList.add('loaded');
   img.src = src;
 
 }
@@ -506,7 +461,7 @@ const cardsEl = document.getElementById('topic-cards');
 cardsEl.innerHTML = TOPICS.map((t,i) => `
   <article class="tcard" data-topic="${t.id}" tabindex="0">
     <div class="tcard-thumb">
-      <img src="${topicImgUrl(t.image, 400)}" data-fallback="https://picsum.photos/seed/dg-${t.id}-card/400/300" alt="${t.imageAlt || t.label}" loading="lazy" referrerpolicy="no-referrer" />
+      <img src="${topicImgUrl(t.image)}" alt="${t.imageAlt || t.label}" loading="lazy" />
     </div>
     <div class="tcard-body">
       <div class="tcard-icon" style="border-color:${t.color}55;color:${t.color}">${String(i+1).padStart(2,'0')}</div>
@@ -515,7 +470,6 @@ cardsEl.innerHTML = TOPICS.map((t,i) => `
     </div>
   </article>
 `).join('');
-wireTopicImageFallback();
 cardsEl.addEventListener('click', e => {
   const card = e.target.closest('.tcard');
   if(card) openTopicSlide(card.dataset.topic);
@@ -665,7 +619,7 @@ window.goView = goView;
 
     const ORANGE = 0xff7a1a;
     const BLUE = 0x2288ee;
-    const TEX = 'https://threejs.org/examples/textures/planets/';
+    const TEX = 'images/';
     let landDots = null;
     let atmShader = null;
     const animArcs = [];
