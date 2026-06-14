@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Globalization — Technology & The Internet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="noise-overlay"></div>
+  <canvas id="bg-canvas" class="background-lines"></canvas>
+
+  <div id="splash-loader" aria-live="polite" aria-busy="true" aria-label="Loading">
+    <div class="splash-inner">
+      <div class="splash-logo">DIGITAL<span>GLOBE.</span></div>
+      <div class="splash-pct" id="splash-pct">000%</div>
+      <div class="splash-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"
+        id="splash-bar">
+        <div class="splash-bar-fill" id="splash-bar-fill"></div>
+      </div>
+      <p class="splash-status" id="splash-status">INITIALIZING...</p>
+    </div>
+  </div>
+
+  <nav id="site-nav">
+    <div class="nav-logo">Digital<span>Globe.</span></div>
+    <div class="nav-links">
+      <a class="nav-link active" href="#" data-view="home" id="nav-home">Overview</a>
+      <a class="nav-link" href="#" data-view="quiz" id="nav-quiz">Assessment</a>
+      <button class="nav-cta" type="button" id="nav-credits-btn">Created by</button>
+    </div>
+  </nav>
+
+  <div id="stage">
+    <!-- HOME -->
+    <section id="view-home" class="view active">
+      <!-- TOPICS CAROUSEL -->
+      <div class="topics-strip" style="padding-top: 5rem;">
+        <div class="topics-carousel-container">
+          <div class="carousel-track-wrapper">
+            <canvas id="carousel-webgl-canvas"></canvas>
+          </div>
+
+          <div class="carousel-info-pane" id="carousel-info-pane">
+            <div class="carousel-badge-row">
+              <span class="carousel-hot-badge">🔥 HOT</span>
+              <span class="carousel-tag-badge" id="carousel-slide-tag">INFRASTRUCTURE</span>
+            </div>
+            <h2 class="carousel-slide-title" id="carousel-slide-title">GLOBAL INTERNET ACCESS</h2>
+            <p class="carousel-slide-desc" id="carousel-slide-desc">Over 5.4 billion people are online...</p>
+            <button class="carousel-launch-btn" id="carousel-launch-btn" type="button">
+              <span class="btn-inner">Explore Module</span>
+            </button>
+          </div>
+
+          <div class="carousel-controls">
+            <button class="carousel-nav-btn prev" id="carousel-prev-btn" aria-label="Previous Slide">
+              <svg viewBox="0 0 24 24">
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+              </svg>
+            </button>
+            <button class="carousel-nav-btn next" id="carousel-next-btn" aria-label="Next Slide">
+              <svg viewBox="0 0 24 24">
+                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+              </svg>
+            </button>
+          </div>
+
+          <div class="carousel-thumbnails" id="carousel-thumbnails"></div>
+        </div>
+      </div>
+
+      <div class="wave-bar"></div>
+
+      <!-- DIGITAL GLOBALIZATION HERO -->
+      <div class="home-grid">
+        <div class="hero-copy">
+          <h1 class="hero-title">
+            <span class="hero-kicker">technology &amp; the internet</span>
+            <span class="hero-main">digital</span>
+            <span class="hero-main main-outline">globalization</span>
+            <span class="hero-subtitle">connects the world.</span>
+          </h1>
+          <button class="btn-explore" type="button" id="btn-first-topic">
+            <span class="btn-inner">Explore Topics</span>
+          </button>
+        </div>
+
+        <!-- REPLICATED FLOATING IMAGE DESIGN DECK -->
+        <div class="hero-media-showcase">
+          <div class="floating-image-deck">
+            <div class="deck-card card-back">
+              <img src="images/digital-media-3.webp" alt="Digital Media Network Background">
+            </div>
+            <div class="deck-card card-mid">
+              <img src="images/digital-media-2.jpeg" alt="Global Connectivity Flow">
+            </div>
+            <div class="deck-card card-front">
+              <img src="images/digital-media.jpg" alt="Immersive Experience Interface">
+              <div class="card-glass-overlay">
+                <span class="card-badge">SPOTLIGHT</span>
+                <h3>DIGITAL MEDIA</h3>
+                <p>Reshaping human experiences across dynamic virtual ecosystems.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SMOKE EFFECT FOOTER -->
+      <footer class="site-footer">
+        <div class="footer-smoke-wrap">
+          <!-- Globe placed behind the text -->
+          <div class="globe-wrap-card footer-globe">
+            <div class="globe-card-border"></div>
+            <div class="globe-wrap">
+              <div class="globe-fallback" id="globe-fallback">Loading globe…</div>
+              <canvas id="globe3d"></canvas>
+            </div>
+          </div>
+
+          <h2 class="smoke-text">
+            <span class="smoke-letter" style="--delay: 0.1s">D</span>
+            <span class="smoke-letter" style="--delay: 0.2s">I</span>
+            <span class="smoke-letter" style="--delay: 0.3s">G</span>
+            <span class="smoke-letter" style="--delay: 0.4s">I</span>
+            <span class="smoke-letter" style="--delay: 0.5s">T</span>
+            <span class="smoke-letter" style="--delay: 0.6s">A</span>
+            <span class="smoke-letter" style="--delay: 0.7s">L</span>
+            <span class="smoke-letter" style="--delay: 0.8s">G</span>
+            <span class="smoke-letter" style="--delay: 0.9s">L</span>
+            <span class="smoke-letter" style="--delay: 1.0s">O</span>
+            <span class="smoke-letter" style="--delay: 1.1s">B</span>
+            <span class="smoke-letter" style="--delay: 1.2s">E</span>
+            <span class="smoke-letter" style="--delay: 1.3s">.</span>
+          </h2>
+        </div>
+
+        <div class="dev-deck-container">
+          <h2 class="dev-deck-title">
+            <span class="title-main">LEARN GLOBALIZATION</span><br>
+            <span class="title-sub">WITH THE TEAM...</span>
+          </h2>
+
+          <div class="dev-cards-viewport">
+            <div class="dev-cards-track">
+              <!-- Dev 1 -->
+              <div class="dev-card" style="--glow: #ff007f;">
+                <h3 class="dev-name">ATAS, MIKKOS</h3>
+                <div class="dev-profile-plate">
+                  <img class="dev-avatar" src="images/dev-mikkos.png" alt="Mikkos Atas">
+                </div>
+              </div>
+              <!-- Dev 2 -->
+              <div class="dev-card" style="--glow: #00f0ff;">
+                <h3 class="dev-name">BONGANAY, LHOJEN</h3>
+                <div class="dev-profile-plate">
+                  <img class="dev-avatar" src="images/dev-lhojen.jpg" alt="Lhojen Bonganay">
+                </div>
+              </div>
+              <!-- Dev 3 -->
+              <div class="dev-card" style="--glow: #00ff66;">
+                <h3 class="dev-name">CAJAYON, KENNETH</h3>
+                <div class="dev-profile-plate">
+                  <img class="dev-avatar" src="images/dev-kenneth.png" alt="Kenneth Cajayon">
+                </div>
+              </div>
+              <!-- Dev 4 -->
+              <div class="dev-card" style="--glow: #ffb800;">
+                <h3 class="dev-name">DELACERNA, GABRIELLE</h3>
+                <div class="dev-profile-plate">
+                  <img class="dev-avatar" src="images/dev-gabrielle.png" alt="Gabriel Delacerna">
+                </div>
+              </div>
+              <!-- Dev 5 -->
+              <div class="dev-card" style="--glow: #ff007f;">
+                <h3 class="dev-name">HILIS, CALEB</h3>
+                <div class="dev-profile-plate">
+                  <img class="dev-avatar" src="images/dev-caleb.jpg" alt="Caleb Hilis">
+                </div>
+              </div>
+              <!-- Dev 6 -->
+              <div class="dev-card" style="--glow: #00f0ff;">
+                <h3 class="dev-name">SUNGA, EDUARD</h3>
+                <div class="dev-profile-plate">
+                  <img class="dev-avatar" src="images/dev-ed.png" alt="Eduard Sunga">
+                </div>
+              </div>
+              <!-- Dev 7 -->
+              <div class="dev-card" style="--glow: #00ff66;">
+                <h3 class="dev-name">VILLAMOR, LESTER</h3>
+                <div class="dev-profile-plate">
+                  <img class="dev-avatar" src="images/dev-les.png" alt="Lester Villamor">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom-bar">
+          <span>© 2026 Contemporary World Project</span>
+          <div class="footer-links-mini">
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">References</a>
+          </div>
+        </div>
+      </footer>
+    </section>
+
+    <!-- TOPIC SLIDE -->
+    <section id="view-topic" class="view">
+      <div class="slide-header">
+        <button class="slide-back" type="button" id="slide-back">← Overview</button>
+        <div class="slide-progress">Topic <b id="slide-num">01</b> / 06</div>
+      </div>
+      <div class="slide-body">
+        <div class="slide-content">
+          <div class="topic-pages" id="topic-pages">
+            <div class="topic-scroll" id="topic-scroll"></div>
+          </div>
+        </div>
+        <div class="slide-visual">
+          <div class="frame-box frame-corners">
+            <span></span>
+            <div class="slide-img-badge" id="slide-img-badge">Infrastructure</div>
+            <img class="slide-topic-img" id="slide-image" src="" alt="" />
+            <div class="slide-img-overlay"></div>
+            <div class="visual-stat" id="slide-stat">
+              <strong>5.4B</strong>
+              users online worldwide
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Floating Progress Stepper -->
+      <div class="topic-stepper-wrap">
+        <div class="topic-stepper">
+          <div class="stepper-track">
+            <div class="stepper-progress" id="stepper-progress"></div>
+          </div>
+          <div class="stepper-steps" id="stepper-steps"></div>
+        </div>
+      </div>
+
+      <!-- Middle Left/Right Navigation Buttons -->
+      <button class="topic-nav-btn prev" type="button" id="slide-prev" aria-label="Previous Topic">
+        <svg viewBox="0 0 24 24">
+          <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+        </svg>
+      </button>
+      <button class="topic-nav-btn next" type="button" id="slide-next" aria-label="Next Topic">
+        <svg viewBox="0 0 24 24">
+          <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+        </svg>
+      </button>
+    </section>
+
+    <!-- QUIZ -->
+    <section id="view-quiz" class="view">
+      <div class="quiz-shell">
+        <div class="quiz-panel">
+          <div class="q-start" id="q-start">
+            <span class="quiz-badge">Knowledge Assessment</span>
+            <h2>Test Your Knowledge</h2>
+            <p class="quiz-intro">Eight questions covering digital globalization — from internet access and e-commerce
+              to AI, remote work, and the digital divide.</p>
+            <div class="quiz-meta-row">
+              <div class="quiz-meta-item"><strong>8</strong><span>Questions</span></div>
+              <div class="quiz-meta-item"><strong>~5</strong><span>Minutes</span></div>
+              <div class="quiz-meta-item"><strong>6</strong><span>Topics</span></div>
+            </div>
+            <button class="btn-explore" type="button" onclick="startQuiz()" style="width:100%"><span
+                class="btn-inner">Begin Assessment</span></button>
+          </div>
+          <div id="q-game" style="display:none">
+            <div class="quiz-game-head">
+              <div>
+                <span class="quiz-step-label">Progress</span>
+                <span id="q-prog">Question 1 of 8</span>
+              </div>
+              <div class="quiz-score-pill" id="q-score">Score: 0</div>
+            </div>
+            <div class="q-progress-track">
+              <div class="q-bar-fill" id="q-bar" style="width:0%"></div>
+            </div>
+            <div class="q-step-dots" id="q-step-dots" aria-hidden="true"></div>
+            <div class="quiz-game-layout" id="quiz-game-layout">
+              <div class="quiz-main-col">
+                <article class="q-card">
+                  <span class="q-num" id="q-num">01</span>
+                  <h3 class="q-text" id="q-text"></h3>
+                  <div class="q-opts" id="q-opts"></div>
+                </article>
+              </div>
+              <aside class="q-feedback-side" id="q-feedback-side" aria-live="polite">
+                <div class="q-feedback" id="q-feedback" hidden></div>
+              </aside>
+            </div>
+            <button class="q-next" type="button" id="q-next" onclick="nextQ()">Continue</button>
+          </div>
+          <div class="q-end" id="q-end" style="display:none">
+            <span class="quiz-badge">Results</span>
+            <div class="quiz-result-visual">
+              <svg class="quiz-result-ring" viewBox="0 0 120 120" aria-hidden="true">
+                <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+                <circle class="ring-fill" id="quiz-ring-fill" cx="60" cy="60" r="52"></circle>
+              </svg>
+              <div class="quiz-result-score">
+                <strong><span id="ring-num">0</span>/<span id="ring-total">8</span></strong>
+                <span id="ring-pct">0%</span>
+              </div>
+            </div>
+            <h2 id="end-title"></h2>
+            <p id="end-msg"></p>
+            <div class="quiz-actions">
+              <button class="btn-explore" type="button" onclick="startQuiz()"><span
+                  class="btn-inner">Retake</span></button>
+              <button class="btn-slide" type="button" onclick="goView('home')">Back to Overview</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="custom-cursor" id="custom-cursor"><span class="cursor-text"></span></div>
+  <div class="custom-cursor-dot" id="custom-cursor-dot"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
